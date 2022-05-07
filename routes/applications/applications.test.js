@@ -13,15 +13,15 @@ describe('Test /applications endpoint', () => {
     });
 
     describe('Test GET /applications/relevantApplication', () => {
-        test('Should respond with 200 success', async () => {
-            const response = await request(app)
-                .get('/applications/relevantApplication?age=30&category=social&customertype=bronze')
-                .expect('Content-Type', /json/)
-                .expect(200)
-                .expect(verifyCategory);
-                core.info(`get res ${response.body}`)
-                console.log('get res', response.body)
-        });
+        // test('Should respond with 200 success', async () => {
+        //     const response = await request(app)
+        //         .get('/applications/relevantApplication?age=30&category=social&customertype=bronze')
+        //         .expect('Content-Type', /json/)
+        //         .expect(200)
+        //         .expect(verifyCategory);
+        //         core.info(`get res ${response.body}`)
+        //         console.log('get res', response.body)
+        // });
 
         test('Should respond with 400, missing parameter', async () => {
             const response = await request(app)
@@ -91,15 +91,15 @@ describe('Test /applications endpoint', () => {
                 category: "social"
             }
         }
-        test('Should respond with 201, success: true', async () => {
-            const response = await request(app)
-                .post('/applications/installedApps')
-                .send(completeAppData)
-                .expect('Content-Type', /json/)
-                .expect(201);
-                console.log('post res', response.body)
-                expect(response.body).toMatchObject(exampleResponseObj)
-        });
+        // test('Should respond with 201, success: true', async () => {
+        //     const response = await request(app)
+        //         .post('/applications/installedApps')
+        //         .send(completeAppData)
+        //         .expect('Content-Type', /json/)
+        //         .expect(201);
+        //         console.log('post res', response.body)
+        //         expect(response.body).toMatchObject(exampleResponseObj)
+        // });
 
         test('Should respond with 400, missing parameter', async () => {
             const response = await request(app)
