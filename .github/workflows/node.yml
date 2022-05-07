@@ -7,6 +7,7 @@ on:
 jobs:
   test:
     env:
+      CI: true
       MONGO_URL: mongodb://localhost/appsdb
     strategy:
       matrix:
@@ -24,4 +25,4 @@ jobs:
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
       - run: npm install
-      - run: npm test --silent=false
+      - run: npm test
