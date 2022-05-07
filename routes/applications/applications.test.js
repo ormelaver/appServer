@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../../app');
 const { mongoConnect, mongoDisconnect } = require('../../services/mongo');
+const core = require('@actions/core')
 
 describe('Test /applications endpoint', () => {
     beforeAll(async () => {
@@ -18,6 +19,7 @@ describe('Test /applications endpoint', () => {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .expect(verifyCategory);
+                core.info(`get res ${response.body}`)
                 console.log('get res', response.body)
         });
 

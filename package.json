@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --maxWorkers=1",
+    "test": "jest",
     "start": "node server.js"
   },
   "author": "",
@@ -20,6 +20,7 @@
     "node-fetch": "^2.6.7"
   },
   "devDependencies": {
+    "@actions/core": "^1.8.0",
     "jest": "^28.1.0",
     "supertest": "^6.2.3"
   }
