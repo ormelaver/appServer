@@ -17,7 +17,8 @@ describe('Test /applications endpoint', () => {
                 .get('/applications/relevantApplication?age=30&category=social&customertype=bronze')
                 .expect('Content-Type', /json/)
                 .expect(200)
-                .expect(verifyCategory)
+                .expect(verifyCategory);
+                console.log('get res', response.body)
         });
 
         test('Should respond with 400, missing parameter', async () => {
@@ -94,7 +95,7 @@ describe('Test /applications endpoint', () => {
                 .send(completeAppData)
                 .expect('Content-Type', /json/)
                 .expect(201);
-
+                console.log('post res', response.body)
                 expect(response.body).toMatchObject(exampleResponseObj)
         });
 
