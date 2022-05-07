@@ -24,4 +24,4 @@ jobs:
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
       - run: npm install
-      - run: npm test --maxWorkers=2
+      - run: npm test
