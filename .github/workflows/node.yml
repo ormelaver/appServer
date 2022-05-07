@@ -1,0 +1,27 @@
+name: Apps Project CI
+on: 
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  test:
+    env:
+      MONGO_URL: mongodb://localhost/appsDB
+    strategy:
+      matrix:
+        node-version: [16.x, 14.x]
+        mongodb-version: ['5.0']
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@2
+        - name: use node.js version ${{ matrix.node-version }}
+          uses: actions/setup-node@v2
+          with:
+            node-version: ${{ matrix.node-version }}
+        - name: use mongoDB from github actions
+          uses: supercharge/mongodb-github-action@1.7.0
+          with:
+            mongodb-version: ${{ matrix.mongodb-version }}
+        - run: npm install
+        - run: npm test
