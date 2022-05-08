@@ -17,7 +17,7 @@ const { mongoConnect, mongoDisconnect } = require('../../services/mongo');
 describe('Test /applications endpoint', () => {
     beforeAll(async () => {
         await mongoConnect();
-        await populateAppsForTesting();
+        // await populateAppsForTesting();
     });
 
     afterAll(async () => {
