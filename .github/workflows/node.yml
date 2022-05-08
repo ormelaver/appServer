@@ -7,7 +7,6 @@ on:
 jobs:
   test:
     env:
-      MONGO_URL: mongodb://localhost/appsdb
     strategy:
       matrix:
         node-version: [16.x, 14.x]
