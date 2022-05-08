@@ -6,7 +6,6 @@ on:
     branches: [ main ]
 jobs:
   test:
-    env:
     strategy:
       matrix:
         node-version: [16.x, 14.x]
