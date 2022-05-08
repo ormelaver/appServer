@@ -1,11 +1,23 @@
 const request = require('supertest');
 const app = require('../../app');
 const { mongoConnect, mongoDisconnect } = require('../../services/mongo');
-const core = require('@actions/core')
+const appsDB = require('./applications.mongo');
+const testDB = require('../../models/test.mongo');
+
+async function getAllAppsFromProdDB() {
+    const allApps = await appsDB.find({}, {'_id': 0, '__v': 0})
+    return allApps;
+}
+
+async function populateAppsForTesting() {
+    const updatedApps = await getAllAppsFromProdDB();
+    await testDB.insertMany(updatedApps)
+}
 
 describe('Test /applications endpoint', () => {
     beforeAll(async () => {
         await mongoConnect();
+        await populateAppsForTesting();
     });
 
     afterAll(async () => {
@@ -13,15 +25,14 @@ describe('Test /applications endpoint', () => {
     });
 
     describe('Test GET /applications/relevantApplication', () => {
-        // test('Should respond with 200 success', async () => {
-        //     const response = await request(app)
-        //         .get('/applications/relevantApplication?age=30&category=social&customertype=bronze')
-        //         .expect('Content-Type', /json/)
-        //         .expect(200)
-        //         .expect(verifyCategory);
-        //         core.info(`get res ${response.body}`)
-        //         console.log('get res', response.body)
-        // });
+        // POPULATE THE DB BEFORE TESTING IN GITHUB ACTIONS
+        test('Should respond with 200 success', async () => {
+            const response = await request(app)
+                .get('/applications/relevantApplication?age=30&category=social&customertype=bronze')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .expect(verifyCategory);
+        });
 
         test('Should respond with 400, missing parameter', async () => {
             const response = await request(app)
@@ -91,15 +102,15 @@ describe('Test /applications endpoint', () => {
                 category: "social"
             }
         }
-        // test('Should respond with 201, success: true', async () => {
-        //     const response = await request(app)
-        //         .post('/applications/installedApps')
-        //         .send(completeAppData)
-        //         .expect('Content-Type', /json/)
-        //         .expect(201);
-        //         console.log('post res', response.body)
-        //         expect(response.body).toMatchObject(exampleResponseObj)
-        // });
+        test('Should respond with 201, success: true', async () => {
+            const response = await request(app)
+                .post('/applications/installedApps')
+                .send(completeAppData)
+                .expect('Content-Type', /json/)
+                .expect(201);
+                console.log('post res', response.body)
+                expect(response.body).toMatchObject(exampleResponseObj)
+        });
 
         test('Should respond with 400, missing parameter', async () => {
             const response = await request(app)

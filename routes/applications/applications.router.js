@@ -7,7 +7,7 @@ const {
 
 const appsRouter = express.Router();
 
-appsRouter.get('/relevantApplication', httpGetRelevantApps);
-appsRouter.post('/installedApps', httpAddInstalledApps);
+appsRouter.get('/relevantapplication', httpGetRelevantApps);
+appsRouter.post('/installedapps', httpAddInstalledApps);
 
 module.exports = appsRouter;
