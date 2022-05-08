@@ -8,7 +8,7 @@ jobs:
   test:
     env:
       CI: true
-      MONGO_URL: mongodb://localhost/appsDB
+      MONGO_URL: mongodb://localhost/apps
     strategy:
       matrix:
         node-version: [16.x, 14.x]
