@@ -1,18 +1,18 @@
 const request = require('supertest');
 const app = require('../../app');
 const { mongoConnect, mongoDisconnect } = require('../../services/mongo');
-const appsDB = require('./applications.mongo');
-const testDB = require('../../models/test.mongo');
+// const appsDB = require('./applications.mongo');
+// const testDB = require('../../models/test.mongo');
 
-async function getAllAppsFromProdDB() {
-    const allApps = await appsDB.find({}, {'_id': 0, '__v': 0})
-    return allApps;
-}
+// async function getAllAppsFromProdDB() {
+//     const allApps = await appsDB.find({}, {'_id': 0, '__v': 0})
+//     return allApps;
+// }
 
-async function populateAppsForTesting() {
-    const updatedApps = await getAllAppsFromProdDB();
-    await testDB.insertMany(updatedApps)
-}
+// async function populateAppsForTesting() {
+//     const updatedApps = await getAllAppsFromProdDB();
+//     await testDB.insertMany(updatedApps)
+// }
 
 describe('Test /applications endpoint', () => {
     beforeAll(async () => {
