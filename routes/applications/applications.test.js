@@ -25,10 +25,9 @@ describe('Test /applications endpoint', () => {
     });
 
     describe('Test GET /applications/relevantApplication', () => {
-        // POPULATE THE DB BEFORE TESTING IN GITHUB ACTIONS
         test('Should respond with 200 success', async () => {
             const response = await request(app)
-                .get('/applications/relevantapplication?age=30&category=social&customertype=bronze')
+                .get('/relevantapplication?age=30&category=social&customertype=bronze')
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .expect(verifyCategory);
@@ -36,7 +35,7 @@ describe('Test /applications endpoint', () => {
 
         test('Should respond with 400, missing parameter', async () => {
             const response = await request(app)
-                .get('/applications/relevantapplication?category=social&customertype=bronze')
+                .get('/relevantapplication?category=social&customertype=bronze')
                 .expect('Content-Type', /json/)
                 .expect(400);
 
@@ -53,7 +52,7 @@ describe('Test /applications endpoint', () => {
 
         test('Should respond with 404 not found', async () => {
             const response = await request(app)
-                .get('/applications/relevantapplication?age=30&category=social&customertype=blue')
+                .get('/relevantapplication?age=30&category=social&customertype=blue')
                 .expect('Content-Type', /json/)
                 .expect(404);
 
@@ -64,7 +63,7 @@ describe('Test /applications endpoint', () => {
 
         test('Should respond with 400, invalid app', async () => {
             const response = await request(app)
-                .get('/applications/relevantapplication?age=30&category=socal&customertype=bronze')
+                .get('/relevantapplication?age=30&category=socal&customertype=bronze')
                 .expect('Content-Type', /json/)
                 .expect(400);
 
@@ -104,7 +103,7 @@ describe('Test /applications endpoint', () => {
         }
         test('Should respond with 201, success: true', async () => {
             const response = await request(app)
-                .post('/applications/installedapps')
+                .post('/installedapps')
                 .send(completeAppData)
                 .expect('Content-Type', /json/)
                 .expect(201);
@@ -114,7 +113,7 @@ describe('Test /applications endpoint', () => {
 
         test('Should respond with 400, missing parameter', async () => {
             const response = await request(app)
-                .post('/applications/installedapps')
+                .post('/installedapps')
                 .send(appDataAgeTypo)
                 .expect('Content-Type', /json/)
                 .expect(400);
@@ -126,7 +125,7 @@ describe('Test /applications endpoint', () => {
 
         test('Should respond with 400, age parameter is not an Int', async () => {
             const response = await request(app)
-                .post('/applications/installedapps')
+                .post('/installedapps')
                 .send(appDataAgeNotInt)
                 .expect('Content-Type', /json/)
                 .expect(400);
@@ -138,7 +137,7 @@ describe('Test /applications endpoint', () => {
 
         test('Should respond with 404, app not found', async () => {
             const response = await request(app)
-                .post('/applications/installedapps')
+                .post('/installedapps')
                 .send(appDataWrongName)
                 .expect('Content-Type', /json/)
                 .expect(404);
