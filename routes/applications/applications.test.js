@@ -40,7 +40,7 @@ describe('Test /applications endpoint', () => {
                 .expect(400);
 
                 expect(response.body).toStrictEqual({
-                    error: 'missing at least one parameter'
+                    message: 'missing at least one parameter'
                 })
         });
         function verifyCategory(res) {
@@ -50,14 +50,14 @@ describe('Test /applications endpoint', () => {
             if (body[1].category !== 'social') throw new Error('retrieved wrong app category for second app');
         }
 
-        test('Should respond with 404 not found', async () => {
+        test('Should respond with 400', async () => {
             const response = await request(app)
                 .get('/applications/relevantapplication?age=30&category=social&customertype=blue')
                 .expect('Content-Type', /json/)
-                .expect(404);
+                .expect(400);
 
                 expect(response.body).toStrictEqual({
-                    error: 'customer type not found'
+                    message: 'customer type not found'
                 })
         });
 
@@ -68,7 +68,7 @@ describe('Test /applications endpoint', () => {
                 .expect(400);
 
                 expect(response.body).toStrictEqual({
-                    error: 'invalid app category'
+                    message: 'invalid app category'
                 });
         });
     });
@@ -119,7 +119,7 @@ describe('Test /applications endpoint', () => {
                 .expect(400);
 
                 expect(response.body).toStrictEqual({
-                    error: 'missing at least one parameter'
+                    message: 'missing at least one parameter'
                 });
         });
 
@@ -131,7 +131,7 @@ describe('Test /applications endpoint', () => {
                 .expect(400);
 
                 expect(response.body).toStrictEqual({
-                    error: 'age parameter is not an Int'
+                    message: 'age parameter is not an Int'
                 });
         });
 
@@ -143,7 +143,7 @@ describe('Test /applications endpoint', () => {
                 .expect(404);
 
                 expect(response.body).toStrictEqual({
-                    error: 'no matching app found'
+                    message: 'no matching app found'
                 });
         });
     })

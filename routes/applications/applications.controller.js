@@ -17,7 +17,6 @@ async function httpGetRelevantApps(req, res) {
         const relevantApps = await getRelevantApps(userAge, category, customerType);
         return res.status(200).json(relevantApps);
     } catch (err) {
-        console.log(err)
         return res.status(400).json({
             message: err.message
         })
@@ -32,24 +31,27 @@ async function httpAddInstalledApps(req, res) {
 
     if (!userAge || !installedAppName) {
         return res.status(400).json({
-            error: 'missing at least one parameter'
+            message: 'missing at least one parameter'
         });
     }
     if (!Number.isInteger(userAge)) {
         return res.status(400).json({
-            error: 'age parameter is not an Int'
+            message: 'age parameter is not an Int'
         });
     }
-    const updatedApp = await addInstalledApp(installedApp);
-    if (!updatedApp) {
+    try {
+        const updatedApp = await addInstalledApp(installedApp);
+        return res.status(201).json({
+            updated: true,
+            updatedObj: updatedApp
+        });
+    } catch (err) {
         return res.status(404).json({
-            error: 'no matching app found'
+            message: err.message
         });
     }
-    return res.status(201).json({
-        updated: true,
-        updatedObj: updatedApp
-    });
+
+    
 }
 
 module.exports = {

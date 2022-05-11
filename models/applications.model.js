@@ -29,7 +29,7 @@ async function getRelevantApps(userAge, category, customerType) {
     const appFilter = {
         category: category
     };
-    switch (customerType) {
+    switch (verifiedType.name) {
         case 'bronze':
             rankedApps = await getRandomApps(verifiedType.appsToReturn, appFilter);
             break;
@@ -49,7 +49,7 @@ async function getRelevantApps(userAge, category, customerType) {
     if (rankedApps.length === 0){
         throw new Error('invalid app category');
     }
-    // console.log('rankedapps', rankedApps)
+
     return rankedApps;
 }
 
@@ -100,7 +100,7 @@ async function addInstalledApp(appObj) {
     }
     const installedApp = await findOneApp(filter);
     if (!installedApp) {
-        return;
+        throw new Error('no matching app found');
     }
 
     const newAverageAge = calculateAverageUserAge(installedApp.numOfInstalls, installedApp.age, appObj.age);
@@ -109,7 +109,7 @@ async function addInstalledApp(appObj) {
         numOfInstalls: installedApp.numOfInstalls + 1
     }
     const updatedApp = await updateOne(filter, newAverageObj)
-    return updatedApp
+    return updatedApp;
 }
 
 function calculateAverageUserAge(numOfInstalls, currentAverage, newAge) {
