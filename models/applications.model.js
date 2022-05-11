@@ -23,7 +23,7 @@ const TYPES = [
 async function getRelevantApps(userAge, category, customerType) {
     const verifiedType = TYPES.find(type => type.name === customerType);
     if (!verifiedType){
-        return;
+        throw new Error('customer type not found');
     }
     let rankedApps = [];
     const appFilter = {
@@ -46,7 +46,9 @@ async function getRelevantApps(userAge, category, customerType) {
             rankedApps = await rankAppsByAverageAge(verifiedType.appsToReturn, appFilter, Number(userAge));
             break;
     }
-
+    if (rankedApps.length === 0){
+        throw new Error('invalid app category');
+    }
     // console.log('rankedapps', rankedApps)
     return rankedApps;
 }

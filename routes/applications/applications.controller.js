@@ -9,24 +9,20 @@ async function httpGetRelevantApps(req, res) {
 
     if (!userAge || !category || !customerType) {
         return res.status(400).json({
-            error: 'missing at least one parameter'
+            message: 'missing at least one parameter'
         });
     }
     
-    
-    const relevantApps = await getRelevantApps(userAge, category, customerType);
-    if (!relevantApps) {
-        return res.status(404).json({
-            error: 'customer type not found'
-        });
-    }
-
-    if (relevantApps.length === 0) {
+    try {
+        const relevantApps = await getRelevantApps(userAge, category, customerType);
+        return res.status(200).json(relevantApps);
+    } catch (err) {
+        console.log(err)
         return res.status(400).json({
-            error: 'invalid app category'
+            message: err.message
         })
     }
-    return res.status(200).json(relevantApps);
+    
 }
 
 async function httpAddInstalledApps(req, res) {
